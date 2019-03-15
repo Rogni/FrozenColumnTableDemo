@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>FrozenColumnTable.qml</file>
+        <file>ResizableItem.qml</file>
+    </qresource>
+</RCC>
