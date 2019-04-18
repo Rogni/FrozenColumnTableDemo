@@ -3,7 +3,7 @@ import QtQuick.Controls 2.4
 import QtQml.Models 2.11
 
 Item {
-    id: element
+    id: root
     clip: true
 
     property Component columnHeader: Item {}
@@ -12,6 +12,9 @@ Item {
 
     property int rowsCount: 0
     property int columnsCount: 0
+
+    property color tableBorderColor: "lightgray"
+    property color headerBorderColor: "gray"
 
     property alias columnHeaderHeight: luRectangle.height
     property alias rowHeaderWidth: luRectangle.width
@@ -41,6 +44,7 @@ Item {
         height: 20
         anchors.top: parent.top
         anchors.left: parent.left
+        borderColor: root.headerBorderColor
     }
 
     Flickable {
@@ -59,7 +63,7 @@ Item {
             Repeater {
                 height: parent.height
                 ResizableItem {
-
+                    borderColor: root.headerBorderColor
                     height: parent.height
                     onHeightChanged: luRectangle.height = height
                     property int __index: index
@@ -98,6 +102,7 @@ Item {
                 ResizableItem {
                     id: rowHeaderItem
                     width: parent.width
+                    borderColor: root.headerBorderColor
                     property int __index: index
                     Loader {
                         id: rowHeaderLoader
@@ -152,7 +157,20 @@ Item {
                         width: parent.width
                         height: parent.height
                     }
-
+                    Rectangle { // <-----
+                        height: 2
+                        anchors.left: parent.left
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        color: root.tableBorderColor
+                    }
+                    Rectangle { // <-----
+                        width: 2
+                        color: root.tableBorderColor
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        anchors.top: parent.top
+                    }
                     width: __private.columnWidths[cellLoader.column] || 0
                     height: __private.rowHeights[cellLoader.row] || 0
                     Connections {
